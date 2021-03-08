@@ -32,3 +32,5 @@ $$prox_f(v) = argmin_x(f(x)+\frac{1}{2}||x - v||_2^2)$$
 
 ## <a name="4.Doubts"></a> 4. Doubts 
 [Back To Index](#Index)
+
+* Factor $\lambda$
