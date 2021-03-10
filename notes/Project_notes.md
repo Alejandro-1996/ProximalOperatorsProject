@@ -26,11 +26,11 @@ $$prox_f(v) = argmin_x(f(x)+\frac{1}{2}||x - v||_2^2)$$
 ## <a name="3.Todo"></a> 3. To do 
 [Back To Index](#Index)
 
-* Leer proximal l1
-* Entender por que delta (non negativity es la projection)
-* Hacer un setup9
 
 ## <a name="4.Doubts"></a> 4. Doubts 
 [Back To Index](#Index)
 
-* Factor $\lambda$
+* Factor $\lambda$? Does it play a role?
+* How to generate test vectors? Is sampling from normal distribution enough?
+* How do we manage the approach cvxpy vs analytical functions?
+* Notation? $prox_{f}(v)$ with  $x$ as optimal vector vs $prox_{f}(x)$ with  $y$ as optimal vector
