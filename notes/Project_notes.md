@@ -31,6 +31,13 @@ $$prox_f(v) = argmin_x(f(x)+\frac{1}{2}||x - v||_2^2)$$
 [Back To Index](#Index)
 
 * Factor $\lambda$? Does it play a role?
-* How to generate test vectors? Is sampling from normal distribution enough?
 * How do we manage the approach cvxpy vs analytical functions?
-* Notation? $prox_{f}(v)$ with  $x$ as optimal vector vs $prox_{f}(x)$ with  $y$ as optimal vector
+* $$\mathrm{prox}_f(v) = \arg \min_{x \in \rm I\!R_+^N}(\|Qx\|_1+\frac{1}{2}||x - v||_2^2)$$
+
+
+
+$\|Lx\|_2 \mathcal{R}$
+
+Dónde $LL^T = \alpha I$ 
+
+L puede ser finite differences, FT, DCT, filtros como LoG (segunda derivada)(ver pag 130 prox_alg, sección 2.2, referencias). Ver sección 2.2 Boyd Proximal Algorithms. Intentar para versiones *fáciles*
