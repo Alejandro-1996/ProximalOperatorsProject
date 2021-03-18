@@ -41,3 +41,16 @@ $\|Lx\|_2 \mathcal{R}$
 Dónde $LL^T = \alpha I$ 
 
 L puede ser finite differences, FT, DCT, filtros como LoG (segunda derivada)(ver pag 130 prox_alg, sección 2.2, referencias). Ver sección 2.2 Boyd Proximal Algorithms. Intentar para versiones *fáciles*
+
+
+## <a name="4.Results"></a> 4. Doubts 
+
+| $f(x)$ |  $\mathrm{prox}_{\delta}(\mathrm{prox}_{\mathcal{R}})$  | $\mathrm{prox}_{\mathcal{R}}(\mathrm{prox}_{\delta})$ |
+|----------|-------------|------|
+| $\|x\|_0$ |  Yes | Yes |
+| $\|x\|_1$ |  Yes | Yes |
+| $\|x\|_2$ |    No   |   Yes |
+| $\|DCTx\|_1$ | No |    No |
+| $\|DCTx\|_2$ | No |    No |
+| $\|Qx\|_1$ ($Q$: Finite Differences) | Yes |  No |
+| $\|Qx\|_1$ ($Q$: LoG) | No |  No |
