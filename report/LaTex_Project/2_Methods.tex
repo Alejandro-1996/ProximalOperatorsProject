@@ -1,0 +1,70 @@
+\section{Methods} \label{sect:2_methods}
+
+\subsection{Computational Environment} \label{sect:2environment}
+All the experiments were carried out in Jupyter Notebooks, with Python version 3.7.9, using standard libraries like NumPy, SciPy and Matplotlib. To obtain most proximal operators, I used CVXPy, a Python modelling library to solve convex optimization problems, using the solver MOSEK. This adapts well to image regularizers, since, as it was explained in Section \ref{sect:2regularizers}, they are convex functions.  
+
+Specific library versions are found in the \href{https://github.com/Alejandro-1996/ProximalOperatorsProject/requirements.txt}{requirements} file of the \href{https://github.com/Alejandro-1996/ProximalOperatorsProject}{project's Github repository}. Furthermore, all the Jupyter Notebooks are found in the same repository. 
+
+\subsection {Evaluating Combination of $\mathcal{R}$ with $\delta_{R_+^N}$}  \label{sect:2evaluating}
+
+To validate each of \eqref{eq:prox_nonneg(prox_r)} and \eqref{eq:prox_r(prox_nonneg)}, I first created a random array ($1$-dimensional or $2$-dimensional as required by the regularizer), and then used CVXPy to calculate the right-hand and the left-hand sides of both equations. Then, I created an error array, to calculate and store the maximum and average errors. The process was repeated $100$ times on different arrays (of the same size and sampled from the same distribution) and the average and maximum errors were taken over the results of the $100$ arrays.
+
+% \begin{itemize}
+%     \item Create random array ($1D$ or $2D$, depending on the regularizer to test).
+%     \item Apply left hand side of equations.
+%     \item Apply right hand side (for both equations).
+%     \item Check for equality.
+% \end{itemize}
+
+% \usetikzlibrary{shapes.geometric, arrows}
+% \tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+% \tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+% \tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, text width=3cm, draw=black, fill=orange!30]
+% \tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+% \tikzstyle{arrow} = [thick,->,>=stealth]
+
+% \begin{tikzpicture}[node distance=2cm]
+
+% \node (start) [startstop] {Start};
+% \node (in1) [io, below of=start] {Create Random Array};
+% \node (pro1) [process, below of=in1] {Evaluate rhs and lhs of  \eqref{eq:prox_nonneg(prox_r)} and \eqref{eq:prox_nonneg(prox_r)}};
+% \node (pro2) [process, below of=pro1] {Keep track of $\nabla = rhs - lhs$ for both \eqref{eq:prox_nonneg(prox_r)} and \eqref{eq:prox_nonneg(prox_r)} };
+% \node (pro3) [process, below of=pro2] {Calculate average errors (over 100 runs)}; 
+% \node (dec1) [decision, below of=pro3, yshift=-0.5cm] {Hola};{Decide whether \eqref{eq:prox_nonneg(prox_r)} and \eqref{eq:prox_nonneg(prox_r)} are true};
+% \node (out1) [io, below of=dec1] {Print};
+% \node (stop) [startstop, below of=out1] {Stop};
+
+% \draw [arrow] (start) -- (in1);
+% \draw [arrow] (in1) -- (pro1);
+% \draw [arrow] (pro1) -- (pro2);
+% \draw [arrow] (pro2) -- (pro3);
+% \draw [arrow] (pro2) |- node[anchor=east] {Repeat $100$ times} (in1);
+% % \draw [arrow] (pro3) -- node[anchor=south] {no} (pro2);
+% \draw [arrow] (pro3) -- (dec1);
+% \draw [arrow] (dec1) -- (out1);
+% % \draw [arrow] (pro2a) -- (out1);
+% \draw [arrow] (out1) -- (stop);
+
+
+% \end{tikzpicture}
+
+% \begin{itemize}
+%     \item Create random array ($1D$ or $2D$, depending on the regularizer to test).
+%     \item Apply left hand side of equations.
+%     \item Apply right hand side (for both equations).
+%     \item Check for equality.
+% \end{itemize}
+
+To generate the input random arrays, I used Gaussian (with $\mu = 0$ and $\sigma \in [1, 255$])) and uniform distributions in several ranges ($[0,1], [0,100], [0,255]$). Since CVXPy solves optimization problems numerically, there is never a complete equality of both arrays, and an arbitrary decision has to be taken on whether \eqref{eq:prox_nonneg(prox_r)} and \eqref{eq:prox_r(prox_nonneg)} are valid or not. As a general trend, the more complex the regularizer (i.e, the more CVXPy functions are used) the lower accuracy, and the larger the arrays the bigger the accuracy. This of course results in computational constraints on the size of the arrays, a constraint that is more relevant for complex regularizers. Consequently the decision on whether two expressions are evaluated to be equal will be explained in a case by case basis in Section \ref{sect:3}.
+
+\subsection{Experiments}
+
+For some complex regularizers of interest, and to compare the results and behaviour on real images, I performed some experiments. These were done on much larger images than the ones use during the experimental procedure, in which the true behaviour of the regularizer is clearly visible. The downside of this experiments is that they are too computationally demanding to perform many of them. 
+
+In particular, I did 2 experiments, one for nonisotropic $\operatorname{TV}$ regularization and one for Hessian-Schatten norm regularization. In both cases, I took a standard test image, normalized it to the range $[0, 1]$, and added white noise to it. Then, I used it as the input of the left-hand side and right hand side of \eqref{eq:prox_nonneg(prox_r)} and \eqref{eq:prox_r(prox_nonneg)}. For an analysis on the results, I compared them visually, calculated the numerical differences and calculated the $\mathrm{SNR}$ to the original.
+
+
+
+
+
+

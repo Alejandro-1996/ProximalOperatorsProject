@@ -1,0 +1,292 @@
+
+@article{soubies_pocket_2019,
+	title = {Pocket guide to solve inverse problems with {GlobalBioIm}},
+	volume = {35},
+	issn = {0266-5611},
+	url = {https://doi.org/10.1088/1361-6420/ab2ae9},
+	doi = {10.1088/1361-6420/ab2ae9},
+	abstract = {GlobalBioIm is an open-source MATLAB® library for solving inverse problems. The library capitalizes on the strong commonalities between forward models to standardize the resolution of a wide range of imaging inverse problems. Endowed with an operator-algebra mechanism, GlobalBioIm allows one to easily solve inverse problems by combining elementary modules in a lego-like fashion. This user-friendly toolbox gives access to cutting-edge reconstruction algorithms, while its high modularity makes it easily extensible to new modalities and novel reconstruction methods. We expect GlobalBioIm to respond to the needs of imaging scientists looking for reliable and easy-to-use computational tools for solving their inverse problems. In this paper, we present in detail the structure and main features of the library. We also illustrate its flexibility with examples from multichannel deconvolution microscopy.},
+	language = {en},
+	number = {10},
+	urldate = {2021-05-22},
+	journal = {Inverse Problems},
+	author = {Soubies, Emmanuel and Soulez, Ferréol and McCann, Michael T. and Pham, Thanh-an and Donati, Laurène and Debarre, Thomas and Sage, Daniel and Unser, Michael},
+	month = sep,
+	year = {2019},
+	pages = {104006},
+	annote = {Pocket guide, to be cited in the intr
+ },
+	file = {IOP Full Text PDF:C\:\\Users\\dolly\\Zotero\\storage\\U4CH3GC8\\Soubies et al. - 2019 - Pocket guide to solve inverse problems with Global.pdf:application/pdf}
+}
+
+@article{lefkimmiatis_hessian_2013,
+	title = {Hessian {Schatten}-{norm} {regularization} for {linear} {inverse} {problems}},
+	volume = {22},
+	issn = {1941-0042},
+	doi = {10.1109/TIP.2013.2237919},
+	abstract = {We introduce a novel family of invariant, convex, and non-quadratic functionals that we employ to derive regularized solutions of ill-posed linear inverse imaging problems. The proposed regularizers involve the Schatten norms of the Hessian matrix, which are computed at every pixel of the image. They can be viewed as second-order extensions of the popular total-variation (TV) semi-norm since they satisfy the same invariance properties. Meanwhile, by taking advantage of second-order derivatives, they avoid the staircase effect, a common artifact of TV-based reconstructions, and perform well for a wide range of applications. To solve the corresponding optimization problems, we propose an algorithm that is based on a primal-dual formulation. A fundamental ingredient of this algorithm is the projection of matrices onto Schatten norm balls of arbitrary radius. This operation is performed efficiently based on a direct link we provide between vector projections onto norm balls and matrix projections onto Schatten norm balls. Finally, we demonstrate the effectiveness of the proposed methods through experimental results on several inverse imaging problems with real and simulated data.},
+	number = {5},
+	journal = {IEEE Transactions on Image Processing},
+	author = {Lefkimmiatis, Stamatios and Ward, John Paul and Unser, Michael},
+	month = may,
+	year = {2013},
+	keywords = {Eigenvalue optimization, Hessian operator, image reconstruction, Image reconstruction, Imaging, Inverse problems, Linear programming, matrix projections, Minimization, Schatten norms, TV, Vectors},
+	pages = {1873--1888},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\dolly\\Zotero\\storage\\P85D3GNR\\6403545.html:text/html;Submitted Version:C\:\\Users\\dolly\\Zotero\\storage\\XRGGZH8I\\Lefkimmiatis et al. - 2013 - Hessian Schatten-Norm Regularization for Linear In.pdf:application/pdf}
+}
+
+@article{lefkimmiatis_poisson_2013,
+	title = {Poisson {image} {reconstruction} {with} {Hessian} {Schatten}-{norm} {regularization}},
+	volume = {22},
+	issn = {1941-0042},
+	doi = {10.1109/TIP.2013.2271852},
+	abstract = {Poisson inverse problems arise in many modern imaging applications, including biomedical and astronomical ones. The main challenge is to obtain an estimate of the underlying image from a set of measurements degraded by a linear operator and further corrupted by Poisson noise. In this paper, we propose an efficient framework for Poisson image reconstruction, under a regularization approach, which depends on matrix-valued regularization operators. In particular, the employed regularizers involve the Hessian as the regularization operator and Schatten matrix norms as the potential functions. For the solution of the problem, we propose two optimization algorithms that are specifically tailored to the Poisson nature of the noise. These algorithms are based on an augmented-Lagrangian formulation of the problem and correspond to two variants of the alternating direction method of multipliers. Further, we derive a link that relates the proximal map of an lp norm with the proximal map of a Schatten matrix norm of order p. This link plays a key role in the development of one of the proposed algorithms. Finally, we provide experimental results on natural and biological images for the task of Poisson image deblurring and demonstrate the practical relevance and effectiveness of the proposed framework.},
+	number = {11},
+	journal = {IEEE Transactions on Image Processing},
+	author = {Lefkimmiatis, Stamatios and Unser, Michael},
+	month = nov,
+	year = {2013},
+	keywords = {Hessian operator, image reconstruction, ADMM, eigenvalue optimization, Poisson noise, schatten norms},
+	pages = {4314--4327},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\dolly\\Zotero\\storage\\JBXPPVV2\\6553148.html:text/html;IEEE Xplore Full Text PDF:C\:\\Users\\dolly\\Zotero\\storage\\WDFRGNR6\\Lefkimmiatis and Unser - 2013 - Poisson Image Reconstruction With Hessian Schatten.pdf:application/pdf}
+}
+
+@article{vonesch_fast_2009,
+	title = {A {fast} {multilevel} {algorithm} for {wavelet}-{regularized} {image} {restoration}},
+	volume = {18},
+	issn = {1941-0042},
+	doi = {10.1109/TIP.2008.2008073},
+	abstract = {We present a multilevel extension of the popular ldquothresholded Landweberrdquo algorithm for wavelet-regularized image restoration that yields an order of magnitude speed improvement over the standard fixed-scale implementation. The method is generic and targeted towards large-scale linear inverse problems, such as 3-D deconvolution microscopy. The algorithm is derived within the framework of bound optimization. The key idea is to successively update the coefficients in the various wavelet channels using fixed, subband-adapted iteration parameters (step sizes and threshold levels). The optimization problem is solved efficiently via a proper chaining of basic iteration modules. The higher level description of the algorithm is similar to that of a multigrid solver for PDEs, but there is one fundamental difference: the latter iterates though a sequence of multiresolution versions of the original problem, while, in our case, we cycle through the wavelet subspaces corresponding to the difference between successive approximations. This strategy is motivated by the special structure of the problem and the preconditioning properties of the wavelet representation. We establish that the solution of the restoration problem corresponds to a fixed point of our multilevel optimizer. We also provide experimental evidence that the improvement in convergence rate is essentially determined by the (unconstrained) linear part of the algorithm, irrespective of the type of wavelet. Finally, we illustrate the technique with some image deconvolution examples, including some real 3-D fluorescence microscopy data.},
+	number = {3},
+	journal = {IEEE Transactions on Image Processing},
+	author = {Vonesch, CÉdric and Unser, Michael},
+	month = mar,
+	year = {2009},
+	keywords = {Image reconstruction, Inverse problems, $_{\textrm{1}}$ -regularization, 3-D, Biomedical imaging, Bound optimization, confocal, Convergence, convergence acceleration, deconvolution, Deconvolution, fast, fluorescence, Fluorescence, Image restoration, inverse problems, Iterative algorithms, Large-scale systems, majorize-minimize, microscopy, Microscopy, multigrid, multilevel, multiresolution, multiscale, nonlinear, optimization transfer, preconditioning, reconstruction, restoration, sparsity, surrogate optimization, variational, wavelets, widefield},
+	pages = {509--523},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\dolly\\Zotero\\storage\\KHUPWHGF\\4770145.html:text/html;IEEE Xplore Full Text PDF:C\:\\Users\\dolly\\Zotero\\storage\\CSMIFF5D\\Vonesch and Unser - 2009 - A Fast Multilevel Algorithm for Wavelet-Regularize.pdf:application/pdf}
+}
+
+@article{chambolle_image_1997,
+	title = {Image recovery via total variation minimization and related problems},
+	volume = {76},
+	issn = {0945-3245},
+	url = {https://doi.org/10.1007/s002110050258},
+	doi = {10.1007/s002110050258},
+	abstract = {We study here a classical image denoising technique introduced by L. Rudin and S. Osher a few years ago, namely the constrained minimization of the total variation (TV) of the image. First, we give results of existence and uniqueness and prove the link between the constrained minimization problem and the minimization of an associated Lagrangian functional. Then we describe a relaxation method for computing the solution, and give a proof of convergence. After this, we explain why the TV-based model is well suited to the recovery of some images and not of others. We eventually propose an alternative approach whose purpose is to handle the minimization of the minimum of several convex functionals. We propose for instance a variant of the original TV minimization problem that handles correctly some situations where TV fails.},
+	language = {en},
+	number = {2},
+	urldate = {2021-05-22},
+	journal = {Numerische Mathematik},
+	author = {Chambolle, Antonin and Lions, Pierre-Louis},
+	month = apr,
+	year = {1997},
+	pages = {167--188}
+}
+
+@unpublished{chambolle_introduction_2009,
+	title = {An introduction to {total} {variation} for {image} {analysis}},
+	url = {https://hal.archives-ouvertes.fr/hal-00437581},
+	abstract = {These are the lecture notes of a course taught in Linz in Sept., 2009, at the school "summer school on sparsity", organized by Massimo Fornasier and Ronny Romlau. They address various theoretical and practical topics related to Total Variation-based image reconstruction. They focu first on some theoretical results on functions which minimize the total variation, and in a second part, describe a few standard and less standard algorithms to minimize the total variation in a finite-differences setting, with a series of applications from simple denoising to stereo, or deconvolution issues, and even more exotic uses like the minimization of minimal partition problems.},
+	urldate = {2021-05-22},
+	author = {Chambolle, Antonin and Caselles, Vicent and Novaga, Matteo and Cremers, Daniel and Pock, Thomas},
+	month = nov,
+	year = {2009},
+	keywords = {Total Variation. Variational Image Reconstruction. Functions with Bounded Variation. Level sets. Convex Optimization. Splitting algorithms. Denoising. Deconvolution. Stereo reconstruction, Total Variation. Variational Image Reconstruction. Functions with Bounded Variation. Level sets. Convex Optimization. Splitting algorithms. Denoising. Deconvolution. Stereo reconstruction.},
+	file = {HAL PDF Full Text:C\:\\Users\\dolly\\Zotero\\storage\\H96UNZYR\\Chambolle et al. - 2009 - An introduction to Total Variation for Image Analy.pdf:application/pdf}
+}
+
+@article{combettes_proximal_2007,
+	title = {proximal {thresholding} {algorithm} for {minimization} over {orthonormal} {bases}},
+	volume = {18},
+	issn = {1052-6234},
+	url = {https://epubs.siam.org/doi/abs/10.1137/060669498},
+	doi = {10.1137/060669498},
+	abstract = {The notion of soft thresholding plays a central role in problems from various areas of applied mathematics, in which the ideal solution is known to possess a sparse decomposition in some orthonormal basis. Using convex-analytical tools, we extend this notion to that of proximal thresholding and investigate its properties, providing, in particular, several characterizations of such thresholders. We then propose a versatile convex variational formulation for optimization over orthonormal bases that covers a wide range of problems, and we establish the strong convergence of a proximal thresholding algorithm to solve it. Numerical applications to signal recovery are demonstrated.},
+	number = {4},
+	urldate = {2021-05-23},
+	journal = {SIAM Journal on Optimization},
+	author = {Combettes, Patrick L. and Pesquet, Jean-Christophe},
+	month = nov,
+	year = {2007},
+	note = {Publisher: Society for Industrial and Applied Mathematics},
+	pages = {1351--1376},
+	file = {Full Text PDF:C\:\\Users\\dolly\\Zotero\\storage\\IY73BMJ6\\Combettes and Pesquet - 2007 - Proximal Thresholding Algorithm for Minimization o.pdf:application/pdf;Snapshot:C\:\\Users\\dolly\\Zotero\\storage\\XGTKLNLG\\060669498.html:text/html}
+}
+
+@article{boyd_neal_nodate,
+	title = {Neal {Parikh} {Department} of {Computer} {Science} {Stanford} {University}},
+	language = {en},
+	author = {Boyd, Stephen},
+	pages = {113}
+}
+
+@article{parikh_proximal_2014,
+	title = {Proximal {algorithms}},
+	volume = {1},
+	issn = {2167-3888},
+	url = {https://doi.org/10.1561/2400000003},
+	doi = {10.1561/2400000003},
+	abstract = {This monograph is about a class of optimization algorithms called proximal algorithms. Much like Newton's method is a standard tool for solving unconstrained smooth optimization problems of modest size, proximal algorithms can be viewed as an analogous tool for nonsmooth, constrained, large-scale, or distributed versions of these problems. They are very generally applicable, but are especially well-suited to problems of substantial recent interest involving large or high-dimensional datasets. Proximal methods sit at a higher level of abstraction than classical algorithms like Newton's method: the base operation is evaluating the proximal operator of a function, which itself involves solving a small convex optimization problem. These subproblems, which generalize the problem of projecting a point onto a convex set, often admit closed-form solutions or can be solved very quickly with standard or simple specialized methods. Here, we discuss the many different interpretations of proximal operators and algorithms, describe their connections to many other topics in optimization and applied mathematics, survey some popular algorithms, and provide a large number of examples of proximal operators that commonly arise in practice.},
+	number = {3},
+	urldate = {2021-05-26},
+	journal = {Foundations and Trends in Optimization},
+	author = {Parikh, Neal and Boyd, Stephen},
+	month = jan,
+	year = {2014},
+	pages = {127--239}
+}
+
+@article{boyd_distributed_2011,
+	title = {Distributed {optimization} and {statistical} {learning} via the {alternating} {direction} {method} of {multipliers}},
+	volume = {3},
+	issn = {1935-8237},
+	url = {https://doi.org/10.1561/2200000016},
+	doi = {10.1561/2200000016},
+	abstract = {Many problems of recent interest in statistics and machine learning can be posed in the framework of convex optimization. Due to the explosion in size and complexity of modern datasets, it is increasingly important to be able to solve problems with a very large number of features or training examples. As a result, both the decentralized collection or storage of these datasets as well as accompanying distributed solution methods are either necessary or at least highly desirable. In this review, we argue that the alternating direction method of multipliers is well suited to distributed convex optimization, and in particular to large-scale problems arising in statistics, machine learning, and related areas. The method was developed in the 1970s, with roots in the 1950s, and is equivalent or closely related to many other algorithms, such as dual decomposition, the method of multipliers, Douglas–Rachford splitting, Spingarn's method of partial inverses, Dykstra's alternating projections, Bregman iterative algorithms for ℓ1 problems, proximal methods, and others. After briefly surveying the theory and history of the algorithm, we discuss applications to a wide variety of statistical and machine learning problems of recent interest, including the lasso, sparse logistic regression, basis pursuit, covariance selection, support vector machines, and many others. We also discuss general distributed optimization, extensions to the nonconvex setting, and efficient implementation, including some details on distributed MPI and Hadoop MapReduce implementations.},
+	number = {1},
+	urldate = {2021-05-26},
+	journal = {Foundations and Trends® in Machine Learning},
+	author = {Boyd, Stephen and Parikh, Neal and Chu, Eric and Peleato, Borja and Eckstein, Jonathan},
+	month = jan,
+	year = {2011},
+	pages = {1--122},
+	file = {Submitted Version:C\:\\Users\\dolly\\Zotero\\storage\\VZH95LTE\\Boyd et al. - 2011 - Distributed Optimization and Statistical Learning .pdf:application/pdf}
+}
+
+@article{del_aguila_pla_cell_2018,
+	title = {Cell {detection} by {functional} {inverse} {diffusion} and {non}-negative {group} {sparsity}—{Part} {II}: {Proximal} {optimization} and {performance} {evaluation}},
+	volume = {66},
+	issn = {1941-0476},
+	shorttitle = {Cell {Detection} by {Functional} {Inverse} {Diffusion} and {Non}-negative {Group} {Sparsity}—{Part} {II}},
+	doi = {10.1109/TSP.2018.2868256},
+	abstract = {In this two-part paper, we present a novel framework and methodology to analyze data from certain image-based biochemical assays, e.g., ELISPOT and Fluorospot assays. In this second part, we focus on our algorithmic contributions. We provide an algorithm for functional inverse diffusion that solves the variational problem we posed in Part I. As part of the derivation of this algorithm, we present the proximal operator for the non-negative group-sparsity regularizer, which is a novel result that is of interest in itself, also in comparison to previous results on the proximal operator of a sum of functions. We then present a discretized approximated implementation of our algorithm and evaluate it both in terms of operational cell-detection metrics and in terms of distributional optimal-transport metrics.},
+	number = {20},
+	journal = {IEEE Transactions on Signal Processing},
+	author = {del Aguila Pla, Pol and Jaldén, Joakim},
+	month = oct,
+	year = {2018},
+	keywords = {Biomedical imaging, Convergence, Acceleration, biomedical imaging, Biomedical measurement, functional optimization, Hilbert space, non-negative group sparsity, Optimization, Proximal operator, Signal processing algorithms, source localization},
+	pages = {5422--5437},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\dolly\\Zotero\\storage\\D3IAUZVT\\8453903.html:text/html;IEEE Xplore Full Text PDF:C\:\\Users\\dolly\\Zotero\\storage\\TZJFEA4A\\del Aguila Pla and Jaldén - 2018 - Cell Detection by Functional Inverse Diffusion and.pdf:application/pdf}
+}
+
+@article{zhang_group-based_2014,
+	title = {Group-{based} {sparse} {representation} for {image} {restoration}},
+	volume = {23},
+	issn = {1941-0042},
+	doi = {10.1109/TIP.2014.2323127},
+	abstract = {Traditional patch-based sparse representation modeling of natural images usually suffer from two problems. First, it has to solve a large-scale optimization problem with high computational complexity in dictionary learning. Second, each patch is considered independently in dictionary learning and sparse coding, which ignores the relationship among patches, resulting in inaccurate sparse coding coefficients. In this paper, instead of using patch as the basic unit of sparse representation, we exploit the concept of group as the basic unit of sparse representation, which is composed of nonlocal patches with similar structures, and establish a novel sparse representation modeling of natural images, called group-based sparse representation (GSR). The proposed GSR is able to sparsely represent natural images in the domain of group, which enforces the intrinsic local sparsity and nonlocal self-similarity of images simultaneously in a unified framework. In addition, an effective self-adaptive dictionary learning method for each group with low complexity is designed, rather than dictionary learning from natural images. To make GSR tractable and robust, a split Bregman-based technique is developed to solve the proposed GSR-driven ℓ0 minimization problem for image restoration efficiently. Extensive experiments on image inpainting, image deblurring and image compressive sensing recovery manifest that the proposed GSR modeling outperforms many current state-of-the-art schemes in both peak signal-to-noise ratio and visual perception.},
+	number = {8},
+	journal = {IEEE Transactions on Image Processing},
+	author = {Zhang, Jian and Zhao, Debin and Gao, Wen},
+	month = aug,
+	year = {2014},
+	note = {Conference Name: IEEE Transactions on Image Processing},
+	keywords = {Minimization, Vectors, Image restoration, Adaptation models, compressive sensing, deblurring, Dictionaries, Image coding, inpainting, Materials, non-local self-similarity, sparse representation},
+	pages = {3336--3351},
+	file = {IEEE Xplore Full Text PDF:C\:\\Users\\dolly\\Zotero\\storage\\X829V47E\\Zhang et al. - 2014 - Group-Based Sparse Representation for Image Restor.pdf:application/pdf}
+}
+
+@article{zhang_group-based_2014-1,
+	title = {Group-{based} {sparse} {representation} for {image} {restoration}},
+	volume = {23},
+	issn = {1941-0042},
+	doi = {10.1109/TIP.2014.2323127},
+	abstract = {Traditional patch-based sparse representation modeling of natural images usually suffer from two problems. First, it has to solve a large-scale optimization problem with high computational complexity in dictionary learning. Second, each patch is considered independently in dictionary learning and sparse coding, which ignores the relationship among patches, resulting in inaccurate sparse coding coefficients. In this paper, instead of using patch as the basic unit of sparse representation, we exploit the concept of group as the basic unit of sparse representation, which is composed of nonlocal patches with similar structures, and establish a novel sparse representation modeling of natural images, called group-based sparse representation (GSR). The proposed GSR is able to sparsely represent natural images in the domain of group, which enforces the intrinsic local sparsity and nonlocal self-similarity of images simultaneously in a unified framework. In addition, an effective self-adaptive dictionary learning method for each group with low complexity is designed, rather than dictionary learning from natural images. To make GSR tractable and robust, a split Bregman-based technique is developed to solve the proposed GSR-driven ℓ0 minimization problem for image restoration efficiently. Extensive experiments on image inpainting, image deblurring and image compressive sensing recovery manifest that the proposed GSR modeling outperforms many current state-of-the-art schemes in both peak signal-to-noise ratio and visual perception.},
+	number = {8},
+	journal = {IEEE Transactions on Image Processing},
+	author = {Zhang, Jian and Zhao, Debin and Gao, Wen},
+	month = aug,
+	year = {2014},
+	note = {Conference Name: IEEE Transactions on Image Processing},
+	keywords = {Minimization, Vectors, Image restoration, Adaptation models, compressive sensing, deblurring, Dictionaries, Image coding, inpainting, Materials, non-local self-similarity, sparse representation},
+	pages = {3336--3351},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\dolly\\Zotero\\storage\\VH5PG86K\\6814320.html:text/html;IEEE Xplore Full Text PDF:C\:\\Users\\dolly\\Zotero\\storage\\Q2MKS29D\\Zhang et al. - 2014 - Group-Based Sparse Representation for Image Restor.pdf:application/pdf}
+}
+
+@article{baritaux_sparsity-driven_2011,
+	title = {Sparsity-{driven} {reconstruction} for {FDOT} {with} {anatomical} {priors}},
+	volume = {30},
+	issn = {1558-254X},
+	doi = {10.1109/TMI.2011.2136438},
+	abstract = {In this paper we propose a method based on (2, 1)-mixed-norm penalization for incorporating a structural prior in FDOT image reconstruction. The effect of (2, 1)-mixed-norm penalization is twofold: first, a sparsifying effect which isolates few anatomical regions where the fluorescent probe has accumulated, and second, a regularization effect inside the selected anatomical regions. After formulating the reconstruction in a variational framework, we analyze the resulting optimization problem and derive a practical numerical method tailored to (2, 1)-mixed-norm regularization. The proposed method includes as particular cases other sparsity promoting regularization methods such as ℓ1-norm penalization and total variation penalization. Results on synthetic and experimental data are presented.},
+	number = {5},
+	journal = {IEEE Transactions on Medical Imaging},
+	author = {Baritaux, Jean-Charles and Hassler, Kai and Bucher, Martina and Sanyal, Sebanti and Unser, Michael},
+	month = may,
+	year = {2011},
+	note = {Conference Name: IEEE Transactions on Medical Imaging},
+	keywords = {Image reconstruction, Imaging, reconstruction, Fluorescence imaging, Image segmentation, Labeling, Mathematical model, Noise reduction, optical tomography, optimization, Pixel},
+	pages = {1143--1153},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\dolly\\Zotero\\storage\\PL7GHNP7\\5750048.html:text/html;IEEE Xplore Full Text PDF:C\:\\Users\\dolly\\Zotero\\storage\\X6HNN38W\\Baritaux et al. - 2011 - Sparsity-Driven Reconstruction for FDOT With Anato.pdf:application/pdf}
+}
+
+% 	title = {Tutorial: {Biomedical} {Image} {Reconstruction}—{From} {Foundations} {To} {Deep} {Neural} {Networks} at {ICASSP} 2020},
+% 	url = {https://cibm.ch/tutorial-may-2020-icassp},
+@article{noauthor_tutorial_2020,
+    title = {Tutorial: {Biomedical} {image} {reconstruction}—{From} {foundations} {to} {deep} {neural} {networks}},
+	shorttitle = {Tutorial},
+	author = {Unser, Michael and del Aguila Pla, Pol},
+	journal = {International Conference in Acoustic, Speech and Signal Processing},
+	url = {https://cibm.ch/tutorial-may-2020-icassp},
+	year = {2020},
+	abstract = {Initially planned to be in Barcelona, due to COVID-19, the International Conference on Acoustics, Speech and Signal Processing ICASSP 2020, the world’s largest and most comprehensive technical conference focused on signal processing and its applications, took place from May 4-8 … Read More},
+% 	language = {en-US},
+% 	urldate = {2021-06-01},
+% 	journal = {CIBM {\textbar} Center for Biomedical Imaging},
+	month = {May},
+	file = {Snapshot:C\:\\Users\\dolly\\Zotero\\storage\\4X2QA4MZ\\tutorial-may-2020-icassp.html:text/html}
+}
+
+@article{del_aguila_pla_cell_2018-1,
+	title = {Cell {detection} by {functional} {inverse} {diffusion} and {non}-negative {group} {sparsity}—{Part} {I}: {Modeling} and {inverse} {problems}},
+	volume = {66},
+	issn = {1941-0476},
+	shorttitle = {Cell {Detection} by {Functional} {Inverse} {Diffusion} and {Non}-negative {Group} {Sparsity}—{Part} {I}},
+	doi = {10.1109/TSP.2018.2868258},
+	abstract = {In this two-part paper, we present a novel framework and methodology to analyze data from certain image-based biochemical assays, e.g., ELISPOT and Fluorospot assays. In this first part, we start by presenting a physical partial differential equations (PDE) model up to image acquisition for these biochemical assays. Then, we use the PDEs' Green function to derive a novel parameterization of the acquired images. This parameterization allows us to propose a functional optimization problem to address inverse diffusion. In particular, we propose a nonnegative group-sparsity regularized optimization problem with the goal of localizing and characterizing the biological cells involved in the said assays. We continue by proposing a suitable discretization scheme that enables both the generation of synthetic data and implementable algorithms to address inverse diffusion. We end Part I by providing a preliminary comparison between the results of our methodology and an expert human labeler on real data. Part II is devoted to providing an accelerated proximal gradient algorithm to solve the proposed problem and to the empirical validation of our methodology.},
+	number = {20},
+	journal = {IEEE Transactions on Signal Processing},
+	author = {del Aguila Pla, Pol and Jaldén, Joakim},
+	month = oct,
+	year = {2018},
+	keywords = {biological modeling, biomedical imaging, Biomedical imaging, convex optimization, Data models, Inverse problems, Mathematical model, Optimization, Solid modeling, source localization, Surface treatment, Three-dimensional displays},
+	pages = {5407--5421},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\dolly\\Zotero\\storage\\NAI6K53E\\8453854.html:text/html;IEEE Xplore Full Text PDF:C\:\\Users\\dolly\\Zotero\\storage\\IP34RMGD\\del Aguila Pla and Jaldén - 2018 - Cell Detection by Functional Inverse Diffusion and.pdf:application/pdf}
+}
+
+@article{boyd_distributed_2011-1,
+	title = {Distributed {optimization} and {statistical} {learning} via the {alternating} {direction} {method} of {multipliers}},
+	volume = {3},
+	issn = {1935-8237, 1935-8245},
+	url = {https://www.nowpublishers.com/article/Details/MAL-016},
+	doi = {10.1561/2200000016},
+	abstract = {Distributed Optimization and Statistical Learning via the Alternating Direction Method of Multipliers},
+	language = {English},
+	number = {1},
+	urldate = {2021-06-07},
+	journal = {Foundations and Trends® in Machine Learning},
+	author = {Boyd, Stephen and Parikh, Neal and Chu, Eric and Peleato, Borja and Eckstein, Jonathan},
+	month = jul,
+	year = {2011},
+	note = {Publisher: Now Publishers, Inc.},
+	pages = {1--122},
+	file = {Full Text PDF:C\:\\Users\\dolly\\Zotero\\storage\\7HLDXW47\\Boyd et al. - 2011 - Distributed Optimization and Statistical Learning .pdf:application/pdf;Snapshot:C\:\\Users\\dolly\\Zotero\\storage\\83PJJFJC\\MAL-016.html:text/html}
+}
+
+@misc{proximity-op-net,
+	title = {The proximity operator repository. User's guide},
+	url = {http://proximity-operator.net},
+    author = {Chierchia, Giovanni, Chouzenoux, Emilie, Combettes, Patrick L. and Pesquet, Jean-Christophe}
+}
+
+@article{Adly2019,
+  author  = {Samir Adly and Loic Bourdin and Fabien Caubet},
+  title   = {On a decomposition formula for the proximal operator of the sum of two convex functions},
+  journal = {Journal of Convex Analysis},
+  year    = {2019},
+  volume  = {26},
+  number  = {3},
+  pages   = {699--718},
+}

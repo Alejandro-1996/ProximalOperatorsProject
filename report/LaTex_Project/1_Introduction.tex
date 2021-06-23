@@ -1,0 +1,74 @@
+\section{Introduction} \label{sect:1}
+
+The present semester project has the aim of exploring properties of the proximal operators of common image regularizers -used to promote a desirable property like sparsity or smoothness in reconstructed images-, which play a critical role in image reconstruction across different fields of science, engineering and medicine. I will study their behaviour when they are combined with nonnegativity constraints, a term that will penalize the reconstruction infinitely when there is any negative term in the result. This is of particular importance because in scientific imaging, images are formed from physical signals constrained to a known range. Specifically, for a given regularizer $\mathcal{R}: \mathbb{R}^N\rightarrow \mathbb{R}$ we want to test whether
+\begin{equation}
+\begin{split}
+        \mathrm{prox}_{\mathcal{R} + \delta_{\rm \mathbb{R}_+^N}}(\mathbf{v}) &= \mathrm{prox}_{\mathcal{R}}(\mathrm{prox}_{\delta_{\rm \mathbb{R}_+^N}}(\mathbf{v}))\mbox{, or}\\
+        \mathrm{prox}_{\mathcal{R} + \delta_{\rm \mathbb{R}_+^N}}(\mathbf{v}) &= \mathrm{prox}_{\delta_{\rm \mathbb{R}_+^N}}(\mathrm{prox}_{\mathcal{R}}(\mathbf{v})).
+    \end{split}    
+\end{equation}
+Any of the two fulfilled conditions can potentially %enable reduced splitting -necessary for the current algorithm of choice, ADMM (see section \ref{sect:1.prox})-, therefore 
+improve computational performance when using proximal optimization algorithms for image reconstruction.
+
+In this section I will describe the general imaging problem, which is recovering a representation of an object from noisy measurements. Furthermore, I will describe how optimization and regularization play a key role in solving it. In Section \ref{sect:2}, I will describe some relevant image regularizers, along with the concept of proximal operator and its applicability in image reconstruction problems. Moreover, I will present some examples of optimization algorithms that rely on the proximal operator. In Section \ref{sect:2_methods} I will give a description of the methods and the computational environment I used throughout the project. Finally, in Section \ref{sect:3}, I will present and discuss the results of the project.  
+
+
+
+% Throughout this section, in \label{sect:1.imaging}, I will first describe the general imaging problem, that is, recovering a representation of an object from noisy measurements, and how regularization and optimization play a key role in solving it. In section \ref{sect:2} I will describe the most common image regularizers, as well as the concept of proximal operator and its link to the most common algorithms to solve image reconstruction problems, as well as the most representative of these algorithms for out purposes. In section \ref{sect:2environment} I will give a description of the methods I used throughout the project, and finally, in section \ref{sect:3} I will present the results of this work.
+
+\subsection{Imaging as an Inverse Problem} \label{sect:1.imaging}
+
+An imaging problem \cite{soubies_pocket_2019, noauthor_tutorial_2020} takes the form
+\begin{equation}
+    \mathbf{y} = \mathbf{Hx} + \mathbf{w}\mathrm{,}
+    \label{eq:imaging_compact}
+\end{equation}
+where $\mathbf{y} \in \mathbb{R}^M$ corresponds to discrete measurements recorded by an imaging system, and $\mathbf{x}\in \mathbb{R}^N$ is the representation of a \textit{d}-dimensional, continuously defined object. $\mathbf{x}$ and $\mathbf{y}$ are therefore related through the linear operator $\mathbf{H}:\mathbb{R}^N\rightarrow\mathbb{R}^M$ that models the imaging system (for example, the Radon transform in the case of computer tomography). Then, $\mathbf{Hx}$ corresponds to a noiseless representation that reaches a detector with the added noise $\mathbf{w} \in \mathbb{R}^M$. The noise $\mathbf{w}$ is assumed to be independent and identically distributed (i.i.d.), and it is usually modelled as Gaussian. 
+
+Therefore, the imaging task consists of recovering $\mathbf{x}$ from the measurement $\mathbf{y}$. The \textit{forward} model is given by $\mathbf{H}$ (it is assumed to be known, at least up to some variation), and the problem of recovering $\mathbf{y}$ is referred to as an \textit{inverse} problem. 
+
+The most immediate solution is to solve the \textit{least squares} optimization problem
+\begin{equation}
+    \arg \min_{\mathbf{x}\in \rm \mathbb{R}^N}\|\mathbf{Hx} - \mathbf{y}\|^2_2
+    \label{eq:least_squares}
+\end{equation}
+Which makes $\mathbf{Hx}$ as similar to $\mathbf{y}$ as possible, where $\mathbf{x}$ is an optimization variable whose optimal value should be a representation of the original object. Note that, since $\mathbf{H}$ is known, a value of $0$ for this objective is equivalent to having a noiseless measurement. Given that the noise is assumed to be i.i.d, solving \eqref{eq:least_squares} is corresponds to using the maximum likelihood estimation. 
+
+The solution $\mathbf{\hat{x}}_\mathrm{LS}$ to the least squares problem is available in closed-form as
+\begin{equation}
+    \mathbf{\hat{x}}_\mathrm{LS} = (\mathbf{H}^T\mathbf{H})\mathbf{H}^T\mathbf{y}\mathrm{.}
+    \label{eq:least_squares_solution}
+\end{equation}
+However, inverse problems are generally ill-posed, which means, among other things, that there are many solutions  $\mathbf{\hat{\mathbf{x}}}_\mathrm{i}$ for which $\mathbf{\hat{\mathbf{x}}}_1 = \mathbf{\hat{x}}_2$ yields $\mathbf{H}\mathbf{\hat{x}}_1 = \mathbf{H}\mathbf{\hat{x}}_2$, and this often results in non-desirable artifacts. Moreover there is no guarantee that $\mathbf{\hat{x}}_\mathrm{LS}$ will be similar to the true $\mathbf{x}$. To \textit{guide} the solution, it is necessary to include previous knowledge about the object in  $\mathbf{x}$. For the scope of this project, we will look at two terms that can be added to the minimization objective of \eqref{eq:least_squares}. 
+
+The first additional term is used to restrict the solution to nonnegative elements, and it is given by
+\begin{equation}
+    \delta_{\rm \mathbb{R}_+^N}(\mathbf{x}) =
+    \begin{cases}
+        \begin{split}
+        0\qquad \mbox{if } &\mathbf{x} \in \rm \mathbb{R}_+^N\mathrm{,} \\
+        + \infty \ \mbox{   if } &\mathbf{x}\, \notin \rm \mathbb{R}_+^N\mathrm{.}
+        \end{split}
+     \end{cases}
+    \label{eq:indicator_function}
+\end{equation}
+Here, $\delta: \mathbb{R}^N \rightarrow \mathbb{R}_+ \bigcup \{+\infty\}$ is an indicator function that forces the solution into a particular set, in this case, the set of nonnegative vectors $\mathbb{R}_+^\mathrm{N}$. Since the values are limited to $\{0, \infty\}$, this term guarantees that the solution will not have any nonnegative element, as the value of the objective function go to $\infty$. On the other hand, inside the valid set, it will have no further effect. 
+
+The second term that is added to the objective function is given by:
+\begin{equation}
+        \mathcal{R}(\mathbf{x}) = \operatorname{R}(\mathbf{Lx})
+    \label{eq:regularizer}
+\end{equation}
+In  \eqref{eq:regularizer}, $\mathcal{R}: \mathbb{R}^N \rightarrow \mathbb{R}$ is an operator that \textit{measures} a transform $\mathbf{L}: \mathbb{R}^N \rightarrow \mathbb{R}^Q$ of $\mathbf{x}$ through the scalar function $\operatorname{R}: \mathbb{R}^Q \rightarrow \mathbb{R}$. Thus, $\mathcal{R}$ is a scalar quantity that represents a property of $\mathbf{x}$ that is desired to be small. In the case of imaging problems, previous knowledge can often be encoded as sparsity, either directly on $\mathbf{x}$ (the case in which $\mathbf{L} = \mathbf{I}$) or on a transform $\mathbf{Lx}$. Thus, a common choice for $\operatorname{R}$ is the $\ell_1$ norm, but there are many sophisticated choices (see Section \ref{sect:2regularizers} for more details). 
+
+Finally, it is important to say that while it is necessary to have a measure of similarity between $\mathbf{Hx}$ and $\mathbf{y}$, the sum of squares is by no means the only choice. Thus, we will denote the measure of similarity between forward model and measurements by $\mathcal{D}(\mathbf{Hx}, \mathbf{y})$, where $\mathcal{D}: \mathbb{R}^M \times \mathbb{R}^M \rightarrow \mathbb{R}$. However, the choice of $\mathcal{D}$ is outside of the scope of this project. 
+
+With that, we arrive at the most common optimization problem in imaging,
+\begin{equation}
+    \arg \min_{\mathbf{x}\in\mathbb{R}}\mathcal{D}(\mathbf{Hx}, \mathbf{y}) +  \mathcal{R}(\mathbf{Lx}) + \delta_{\mathbb{R}_+^\mathrm{N}}(\mathbf{x}).
+    \label{eq:imaging_problem}
+\end{equation}
+This minimization problem -evidently more complex than the one presented in  \eqref{eq:least_squares}- has several difficulties. One of them is that there is no closed form solution as in \eqref{eq:least_squares}, so the solution has to be found through iterative algorithms. These algorithms usually require first-order information (e.g. the gradient) or second-order information (e.g. the Hessian, which is used in iterative algorithms to achieve faster convergence). However, biomedical imaging has the constraint that even if second derivatives are available, the size of $\nabla^2f(\mathbf{x}) \in \mathbb{R}^{N^2}$ is the squared of the size of $\mathbf{x}$. In an image of $256\times 256$ pixels, this is in the order of $10^{10}$, which means that it cannot be easily stored. Thus, there is a need to restrict to first-order methods, otherwise the computational memory requirements are simply too high. Moreover, image regularizers in general are or include norms, which are non-smooth and non-differentiable, whilst the nonnegativity constraint is highly non-smooth. Therefore, the optimization problem \eqref{eq:imaging_problem} is not solvable through algorithms designed for smooth optimization like gradient descent, and proximal algorithms are required. 
+
+To solve the objective function, algorithms like the alternating direction method of multipliers (ADMM) are used. ADMM is a common and representative example of an iterative algorithm that can solve the optimization problem \eqref{eq:imaging_problem}, but there are several options. ADMM performs one splitting per term in the objective function, and solves its proximal operator, a process that is guaranteed to converge but increments the computational cost and memory requirements for each split. Thus, investigating the proximal operator of common regularizers in combination with nonnegativity constraints could provide significant speed-ups and memory savings in image reconstruction tasks. % In section 2 I will first deepen on the topic of common image regularizers. Then, I will explain the proximal operator and its related optimization algorithms, as well as the closed form solutions for the proximal operator of functions of interest. 
+

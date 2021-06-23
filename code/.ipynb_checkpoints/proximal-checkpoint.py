@@ -6,18 +6,16 @@ import matplotlib.pyplot as plt
 from iplabs import IPLabViewer as viewer
 import sys
 
-# class ProxUtils():
-    
-#     def __init__(self):
-#         pass
-    
-def nonneg(x):
-    y=np.copy(x)
-    y[x<0] = 0
-    return y
+def nonneg(v):
+    x = cp.Variable(v.shape, nonneg=True)
+    obj = cp.sum_squares(x - v)
 
-#     def l1_prox(x, lamb):
-#         return np.sign(x)*np.maximum(np.abs(x) - lamb, 0)
+    prob = cp.Problem(cp.Minimize(obj))
+    prob.solve(cp.MOSEK)
+    return x.value
+
+def snr_db(orig, img):
+    return 10*np.log10((np.sum(orig**2))/(np.sum((orig-img)**2)))
 
 l1_prox = lambda x, lamb: np.sign(x)*np.maximum(np.abs(x) - lamb, 0)
 l2_prox = lambda x, lamb: (1 - np.minimum(lamb/np.linalg.norm(x, 2), np.ones_like(x)))*x
@@ -159,13 +157,13 @@ def evaluate(reg, reg_nonneg, n=100, size=(100, ), mean=0, sigma=1, lamb=0.5, rt
     if plot:
         if len(size) == 1:
             print('Plotting example')
-            plt.figure(figsize = (12, 9))
+            plt.figure(figsize = (8, 6))
             plt.plot(v, 'o', label = '$\mathbf{v}$', markersize = 6)
             plt.plot(reg_plus_nonneg_vect, 's', label = '$\mathrm{prox}_{\mathcal{R} + \delta}(\mathbf{v})$', alpha = 1 ,markersize = 4)
             plt.plot(nonneg_o_reg_vect, 'x', label = '$\mathrm{prox}_{\delta}(\mathrm{prox}_{\mathcal{R}}(\mathbf{v}))$', alpha = 1, markersize = 9)
             plt.plot(reg_o_nonneg_vect, '+', label = '$\mathrm{prox}_{\mathcal{R}}(\mathrm{prox}_{\delta}(\mathbf{v}))$', alpha = 1, markersize = 11)
-            plt.xlabel('Index')
-            plt.ylabel('Value')
+            plt.xlabel('Index', fontname='Calibri', fontsize=14)
+            plt.ylabel('Value', fontname='Calibri', fontsize=14)
             plt.grid()
             plt.legend()
             plt.show()
@@ -196,11 +194,7 @@ def Lp_prox(v, lamb, p = 1, exp_p = False):
         obj = cp.pnorm(x, p) + cp.sum_squares(x - v)/(2*lamb)
 
     prob = cp.Problem(cp.Minimize(obj))
-#     prob.solve(solver=cp.ECOS)
-    try:
-        prob.solve()
-    except:
-        prob.solve(solver=cp.ECOS)
+    prob.solve(cp.MOSEK)
     return x.value
 
 def Lp_plus_nonneg_prox(v, lamb, p = 1, exp_p = False):
@@ -219,11 +213,7 @@ def Lp_plus_nonneg_prox(v, lamb, p = 1, exp_p = False):
         obj = cp.pnorm(x, p) + cp.sum_squares(x - v)/(2*lamb)
 
     prob = cp.Problem(cp.Minimize(obj))
-#     prob.solve(solver=cp.ECOS)
-    try:
-        prob.solve()
-    except:
-        prob.solve(solver=cp.ECOS)
+    prob.solve(cp.MOSEK)
 
     return x.value
 
@@ -255,8 +245,7 @@ def TV_1D_Lp_prox(v, lamb, p = 1, exp_p = False):
 #     obj = cp.tv(x) + cp.sum_squares(x - v)/(2*lamb)
 
     prob = cp.Problem(cp.Minimize(obj))
-    prob.solve()
-    
+    prob.solve(cp.MOSEK)    
     return x.value
 
 
@@ -287,7 +276,7 @@ def TV_1D_Lp_plus_nonneg_prox(v, lamb, p = 1, exp_p = False):
 #     obj = cp.tv(x) + cp.sum_squares(x - v)/(2*lamb)
 
     prob = cp.Problem(cp.Minimize(obj))
-    prob.solve()
+    prob.solve(cp.MOSEK)
     
     return x.value
 
@@ -328,7 +317,7 @@ def TV_prox(v, lamb, p=1, q=1, exp = False):
     obj = lq + cp.sum_squares(x - v)/(2*lamb)
     
     prob = cp.Problem(cp.Minimize(obj))
-    prob.solve()
+    prob.solve(cp.MOSEK)
     
     return x.value
 
@@ -379,7 +368,7 @@ def TV_plus_nonneg_prox(v, lamb, p=1, q=1, exp = False):
     obj = lq + cp.sum_squares(x - v)/(2*lamb)
     
     prob = cp.Problem(cp.Minimize(obj))
-    prob.solve()
+    prob.solve(cp.MOSEK)
     
     return x.value
 
@@ -415,7 +404,7 @@ def GS_1D_prox(v, lamb, g=1, p=1, q=1, exp=False):
     obj = lq + cp.sum_squares(x - v)/(2*lamb)
     
     prob = cp.Problem(cp.Minimize(obj))
-    prob.solve()
+    prob.solve(cp.MOSEK)
     
     return x.value
     
@@ -438,9 +427,9 @@ def GS_1D_plus_nonneg_prox(v, lamb, g=1, p=1, q=1, exp=False):
     for i in np.arange(0, n, len_n_g):
         # Partition X and get norm in one step
         if exp:
-            group_norms.append(cp.power(cp.norm(x[i:i+len_n_g], p), p))
+            group_norms.append(cp.power(cp.pnorm(x[i:i+len_n_g], p), p))
         else:
-            group_norms.append(cp.norm(x[i:i+len_n_g], p))
+            group_norms.append(cp.pnorm(x[i:i+len_n_g], p))
     
     if exp:
         lq = cp.power(cp.pnorm(cp.hstack(group_norms), q), q)
@@ -450,7 +439,7 @@ def GS_1D_plus_nonneg_prox(v, lamb, g=1, p=1, q=1, exp=False):
     obj = lq + cp.sum_squares(x - v)/(2*lamb)
     
     prob = cp.Problem(cp.Minimize(obj))
-    prob.solve()
+    prob.solve(cp.MOSEK)
     
     return x.value
 
@@ -490,7 +479,7 @@ def GS_prox(v, lamb, g=[1, 1], p=1, q=1, exp=False):
     obj = lq + cp.sum_squares(x - v)/(2*lamb)
     
     prob = cp.Problem(cp.Minimize(obj))
-    prob.solve()
+    prob.solve(cp.MOSEK)
     
     return x.value
     
@@ -528,13 +517,13 @@ def GS_plus_nonneg_prox(v, lamb, g=[1, 1], p=1, q=1, exp=False):
     obj = lq + cp.sum_squares(x - v)/(2*lamb)
     
     prob = cp.Problem(cp.Minimize(obj))
-    prob.solve()
+    prob.solve(cp.MOSEK)
     
     return x.value
 
 
-######################################3 EigenValue Decomposition
-def eig_prox(v, lamb, p=1, exp=False):
+######################################3 Schatten Norms
+def schatten_prox(v, lamb, schatten_norm = 'nuc'):
     
     # Initial tests on input
     if len(v.shape) != 2:
@@ -548,18 +537,14 @@ def eig_prox(v, lamb, p=1, exp=False):
     
     x = cp.Variable((nx, ny))
 
-    obj = cp.lambda_max(x) + cp.sum_squares(x - v)/(2*lamb)
+    obj = cp.norm(x, schatten_norm) + cp.sum_squares(x - v)/(2*lamb)
     
     prob = cp.Problem(cp.Minimize(obj))
-    try:
-        prob.solve()
-    except:
-        prob.solve(solver=cp.ECOS)
-    
+    prob.solve(cp.MOSEK)
+#     prob.solve(cp.MOSEK)
     return x.value
-
-def eig_plus_nonneg_prox(v, lamb, p=1, exp=False):
     
+def schatten_plus_nonneg_prox(v, lamb, schatten_norm = 'nuc'):
     # Initial tests on input
     if len(v.shape) != 2:
         print('WARNING:\nThis function is designed for 2D signals. Stopping...')
@@ -570,14 +555,78 @@ def eig_plus_nonneg_prox(v, lamb, p=1, exp=False):
         return
     
     x = cp.Variable((nx, ny), nonneg=True)
-
-    obj = cp.lambda_max(x) + cp.sum_squares(x - v)/(2*lamb)
+    
+    obj = cp.norm(x, schatten_norm) + cp.sum_squares(x - v)/(2*lamb)
     
     prob = cp.Problem(cp.Minimize(obj))
-    try:
-        prob.solve()
-    except:
-        prob.solve(solver=cp.ECOS)
+    prob.solve(cp.MOSEK)
+    return x.value
+
+
+###################################################### HESSIAN SCHATTEN ###########
+def Hessian_Schatten_prox(v, lamb, p='nuc'):
+    
+    if len(v.shape) != 2:
+        print('WARNING\n:This function is  designed for 2D operators. Terminating function.')
+        return
+    
+    nx, ny = v.shape
+    
+    x = cp.Variable((nx, ny))
+    
+    # Defining D1 and D2x We loose one element in the *other* dimension to account for the lost element and have elements of equal size
+    D1 = (x[:, 1:] - x[:, :-1])[:-1, :]
+    D2 = (x[1:, :] - x[:-1, :])[:, :-1]
+    D11 = (D1[:, 1:] - D1[:, :-1])[:-1, :]
+    D22 = (D2[1:, :] - D2[:-1, :])[:, :-1]
+    D21 = (D2[:, 1:] - D2[:, :-1])[:-1, :]
+    D12 = (D1[1:, :] - D1[:-1, :])[:, :-1]
+    
+    hs_obj = []
+#     hs_obj = 0
+    for i in range(D11.shape[0]):
+        for j in range(D22.shape[1]):
+            top_row = cp.hstack([D11[i, j], D12[i, j]])
+            bottom_row = cp.hstack([D21[i, j], D22[i, j]])
+            hs_obj.append(cp.abs(cp.norm(cp.vstack([top_row, bottom_row]), p)))
+        
+    obj = cp.norm(cp.vstack(hs_obj), 1) + cp.sum_squares(x - v)/(2*lamb)
+    prob = cp.Problem(cp.Minimize(obj))
+    prob.solve(cp.MOSEK)
+    
+    return x.value
+
+def Hessian_Schatten_plus_nonneg_prox(v, lamb, p='nuc'):
+    
+    if len(v.shape) != 2:
+        print('WARNING\n:This function is  designed for 2D operators. Terminating function.')
+        return
+    
+    nx, ny = v.shape
+    
+    x = cp.Variable((nx, ny), nonneg = True)
+    
+    # Defining D1 and D2x We loose one element in the *other* dimension to account for the lost element and have elements of equal size
+    D1 = (x[:, 1:] - x[:, :-1])[:-1, :]
+    D2 = (x[1:, :] - x[:-1, :])[:, :-1]
+    D11 = (D1[:, 1:] - D1[:, :-1])[:-1, :]
+    D22 = (D2[1:, :] - D2[:-1, :])[:, :-1]
+    D21 = (D2[:, 1:] - D2[:, :-1])[:-1, :]
+    D12 = (D1[1:, :] - D1[:-1, :])[:, :-1]
+    
+    hs_obj = []
+    for i in range(D11.shape[0]):
+        for j in range(D22.shape[1]):
+            # Construct array over which we will take l* norm
+            top_row = cp.hstack([D11[i, j], D12[i, j]])
+            bottom_row = cp.hstack([D21[i, j], D22[i, j]])
+            
+            
+            hs_obj.append(cp.abs(cp.norm(cp.vstack([top_row, bottom_row]), p)))
+        
+    obj = cp.norm(cp.vstack(hs_obj), 1) + cp.sum_squares(x - v)/(2*lamb)
+    prob = cp.Problem(cp.Minimize(obj))
+    prob.solve(cp.MOSEK)
     
     return x.value
 
